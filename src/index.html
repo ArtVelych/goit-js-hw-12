@@ -10,18 +10,21 @@
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <form class="search-form">
-      <input class="form-input" type="text" name="searchInput" placeholder="Search image" required>
-      <button class="form-button">Search</button>
+    <form class="form">
+      <label class="input-label">
+        <input class="input-name" name="input-name" placeholder="Search images..." required />
+      </label>
+      <button class="search-btn" type="submit">Search</button>
     </form>
-  
-    <span class="loader">Loading</span>
-  
+    
     <ul class="gallery"></ul>
+    
+    <div class="loader-container">
+      <span class="loader"></span>
+      <button class="load-btn">Load more</button>
+    </div>
   
 
   <script src="./main.js" type="module"></script>
-  <script src="./js/pixabay-api.js" type="module"></script>
-  <script src="./js/render-functions.js" type="module"></script>
 </body>
 </html>
