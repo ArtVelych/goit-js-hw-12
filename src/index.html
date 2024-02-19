@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homework 11</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <form class="search-form">
+      <input class="form-input" type="text" name="searchInput" placeholder="Search image" required>
+      <button class="form-button">Search</button>
+    </form>
+  
+    <span class="loader">Loading</span>
+  
+    <ul class="gallery"></ul>
+  
+
+  <script src="./main.js" type="module"></script>
+  <script src="./js/pixabay-api.js" type="module"></script>
+  <script src="./js/render-functions.js" type="module"></script>
+</body>
+</html>
