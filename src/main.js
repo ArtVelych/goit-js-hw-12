@@ -44,7 +44,8 @@ async function getPhoto(event) {
     return;
   }
 
-   searchInput.value = '';
+  currentSearchQuery = searchQuery;
+  searchInput.value = '';
 
   gallery.innerHTML = '';
   page = 1;
@@ -54,11 +55,35 @@ async function getPhoto(event) {
 
   try {
     const response = await axios.get('/api/', {
-      params: { q: searchQuery },
+      params: { q: currentSearchQuery },
     });
     const data = response.data;
     totalHits = data.totalHits;
     totalResult = renderPhotos(data.hits, totalHits, totalResult);
+  } catch (error) {
+    console.log('Error fetching data:', error);
+    iziToast.show({
+      title: 'Error',
+      message: 'Oops, something went wrong',
+    });
+  } finally {
+    loader.classList.remove('visible');
+  }
+}
+
+async function onLoadMoreClick() {
+  hideLoadBtn();
+  loader.classList.add('visible');
+
+  try {
+    const response = await axios.get('/api/', {
+      params: { q: currentSearchQuery, page: (page += 1) },
+    });
+    const data = response.data;
+
+    totalHits = data.totalHits;
+    totalResult = renderPhotos(data.hits, totalHits, totalResult);
+    smoothScrollToNextGallery();
   } catch (error) {
     console.log('Error fetching data:', error);
     iziToast.show({
@@ -135,32 +160,6 @@ function makeMarkup(
 
     </div>
   </li>`;
-}
-
-async function onLoadMoreClick() {
-  hideLoadBtn();
-  loader.classList.add('visible');
-
-  const searchQuery = searchInput.value.trim();
-
-  try {
-    const response = await axios.get('/api/', {
-      params: { q: searchQuery, page: (page += 1) },
-    });
-    const data = response.data;
-
-    totalHits = data.totalHits;
-    totalResult = renderPhotos(data.hits, totalHits, totalResult);
-    smoothScrollToNextGallery();
-  } catch (error) {
-    console.log('Error fetching data:', error);
-    iziToast.show({
-      title: 'Error',
-      message: 'Oops, something went wrong',
-    });
-  } finally {
-    loader.classList.remove('visible');
-  }
 }
 
 function isLoadMore(totalResult, totalHits) {
